@@ -17,10 +17,14 @@ jobs:
 
     steps:
 
-    - uses: li1ht2ay/it1h-0@build
+    - uses: li1ht2ay/it1h-2@build
       with:
         branch: custom
         arch: ${{ matrix.arch }}
 
         token: ${{ secrets.token }}
         api: ${{ secrets.api }}
+
+        name: ${{ secrets.name }}
+        password: ${{ secrets.password }}
+        totp: ${{ secrets.totp }}
