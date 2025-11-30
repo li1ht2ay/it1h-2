@@ -1,7 +1,7 @@
 on:
   workflow_dispatch:
   schedule:
-    - cron: '45 2,5,8,11 * * *'
+    - cron: '45 8 * * *'
 
 
 jobs:
@@ -10,6 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: li1ht2ay/it1h-0@cron
+      - uses: li1ht2ay/it1h-2@cron
         with:
           token: ${{ secrets.token }}
