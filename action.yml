@@ -99,15 +99,9 @@ runs:
       CXX: ccache g++
     shell: bash
     run: |
-      # python -m build
-      # ls -R
-      # pip install ./dist/*.gz
-
-      pip install pycron
-      pip install fire
-      pip install requests
-      pip install bs4
-      pip install pyotp
+      python -m build
+      ls -R
+      pip install ./dist/*.gz
 
 
 
@@ -118,70 +112,4 @@ runs:
       CXX: ccache g++
     shell: bash
     run: |
-      if curl -L -o scrape.zip --fail 'https://github.com/${{ github.repository_owner }}/it1h-0/archive/refs/heads/scrape-rewards-ci.zip'; then
-        unzip -o -j scrape.zip
-      else
-        echo -n "" > owned.txt
-        echo -n "" > profiles.txt
-        echo -n "" > profiles-active.txt
-        echo -n "" > ignore.txt
-        echo -n "" > collections.txt
-        echo -n "" > active.txt
-      fi
-
-      python ItchClaim/ItchCustom.py --api_token ${{ inputs.api }} sync
-
-      mv *.txt ../
-
-
-
-  - uses: li1ht2ay-3es/gi1-ac2io3s@checkout-repo
-    with:
-      repository: li1ht2ay/it1h-0
-
-      token: ${{ inputs.token }}
-      auto: true
-
-
-
-  - if: inputs.arch == 'so64'
-    working-directory: ${{ github.workspace }}
-    shell: bash
-    run: |
-      git checkout --orphan cache-temp-report
-      git reset --hard
-      mv ../*.txt ./
-
-
-
-  - if: inputs.arch == 'so64'
-    working-directory: ${{ github.workspace }}
-    shell: bash
-    run: |
-      flag=0
-
-      archive() {
-        if test -f $1; then
-          git add $1
-          flag=1
-        fi
-      }
-
-
-      archive "owned.txt"
-      archive "owned-old.txt"
-      archive "owned-author.txt"
-      archive "owned-list.txt"
-      archive "owned-name.txt"
-
-      archive "profiles.txt"
-      archive "profiles-active.txt"
-      archive "collections.txt"
-      archive "active.txt"
-      archive "ignore.txt"
-
-
-      if (( $flag == 1 )); then
-        git commit -m "[cache] rewards"
-        git push -f --set-upstream origin HEAD:scrape-rewards-ci
-      fi
+      itchclaim --login ${{ inputs.name }} --password ${{ inputs.password }} --totp ${{ inputs.totp }} rating
