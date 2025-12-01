@@ -112,4 +112,4 @@ runs:
       CXX: ccache g++
     shell: bash
     run: |
-      itchclaim --login ${{ inputs.name }} --password ${{ inputs.password }} --totp ${{ inputs.totp }} rating
+      itchclaim --login ${{ inputs.name }} --password ${{ inputs.password }} --totp ${{ inputs.totp }} --api_token ${{ inputs.api }} rating
